@@ -8,11 +8,11 @@ quarkus:
       generation: drop-and-create
 
   datasource:
-    username: root
-    password: root
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     db-kind: postgresql
     jdbc:
-      url: jdbc:postgresql://localhost:5432/bridge-notification
+      url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
 
   http:
     port: ${PORT:8080}
