@@ -13,3 +13,6 @@ quarkus:
     db-kind: postgresql
     jdbc:
       url: jdbc:postgresql://localhost:5432/bridge-notification
+
+  http:
+    port: ${PORT:8080}
