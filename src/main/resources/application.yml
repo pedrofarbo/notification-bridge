@@ -1,0 +1,15 @@
+twillio:
+  TWILIO_ACCOUNT_SID: ACe0467f2a2a3a0b732158c8f82a06f1f3
+  TWILIO_AUTH_TOKEN: 208250eafa6adf1c07695032ec3e0ae9
+
+quarkus:
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+
+  datasource:
+    username: root
+    password: root
+    db-kind: postgresql
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/bridge-notification
