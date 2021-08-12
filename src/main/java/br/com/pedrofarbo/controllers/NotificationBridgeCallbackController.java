@@ -2,6 +2,7 @@ package br.com.pedrofarbo.controllers;
 
 import br.com.pedrofarbo.controllers.request.CallbackRequest;
 import br.com.pedrofarbo.services.NotificationService;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -16,14 +17,11 @@ public class NotificationBridgeCallbackController {
 
     @POST
     @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Transactional
-    public String callback(String MessageStatus, String MessageSid) throws Exception {
+    public String callback(@MultipartForm CallbackRequest callbackRequest) throws Exception {
         try {
-            CallbackRequest callbackRequest = new CallbackRequest();
-            callbackRequest.setMessageStatus(MessageStatus);
-            callbackRequest.setMessageSid(MessageSid);
-
-            System.out.println(callbackRequest);
+            System.out.println(callbackRequest.toString());
 
             notificationService.notificationCallback(callbackRequest);
 
