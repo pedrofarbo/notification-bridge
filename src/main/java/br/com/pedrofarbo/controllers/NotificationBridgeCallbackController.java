@@ -18,9 +18,14 @@ public class NotificationBridgeCallbackController {
     @POST
     @Produces(MediaType.TEXT_XML)
     @Transactional
-    public String callback(@MultipartForm CallbackRequest callbackRequest) throws Exception {
+    public String callback(@FormParam("MessageSid") String messageSid, @FormParam("MessageStatus") String messageStatus) throws Exception {
         try {
-            System.out.println(callbackRequest.toString());
+            System.out.println(messageSid);
+            System.out.println(messageStatus);
+
+            CallbackRequest callbackRequest = new CallbackRequest();
+            callbackRequest.setMessageSid(messageSid);
+            callbackRequest.setMessageStatus(messageStatus);
 
             notificationService.notificationCallback(callbackRequest);
 
