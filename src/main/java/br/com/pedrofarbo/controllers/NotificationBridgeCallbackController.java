@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/api/v1/notification-bridge-callback")
 public class NotificationBridgeCallbackController {
@@ -17,13 +16,13 @@ public class NotificationBridgeCallbackController {
     NotificationService notificationService;
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_XML)
     @Transactional
-    public Response callback(CallbackRequest callbackRequest) throws Exception {
+    public String callback(CallbackRequest callbackRequest) throws Exception {
         try {
-            CallbackResponse response = notificationService.notificationCallback(callbackRequest);
-            return Response.ok(response).status(200).build();
+            System.out.println(callbackRequest.toString());
+            notificationService.notificationCallback(callbackRequest);
+            return "<Response/>";
         } catch (Exception e) {
             throw new Exception("Erro ao receber o callback de atualização do provider", e);
         }
