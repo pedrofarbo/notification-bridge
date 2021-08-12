@@ -16,7 +16,7 @@ public class NotificationBridgeCallbackController {
     @Inject
     NotificationService notificationService;
 
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
