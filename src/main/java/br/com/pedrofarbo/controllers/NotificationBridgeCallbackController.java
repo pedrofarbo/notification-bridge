@@ -19,9 +19,6 @@ public class NotificationBridgeCallbackController {
     @Transactional
     public String callback(@FormParam("MessageSid") String messageSid, @FormParam("MessageStatus") String messageStatus) throws Exception {
         try {
-            System.out.println(messageSid);
-            System.out.println(messageStatus);
-
             CallbackRequest callbackRequest = new CallbackRequest();
             callbackRequest.setMessageSid(messageSid);
             callbackRequest.setMessageStatus(messageStatus);

@@ -29,14 +29,10 @@ public class SchedulerNotificationWhatsApp {
 
         List<Notification> notificationList = notificationRepository.findAllByStatusAndType(NotificationStatusEnum.ACCEPTED.name(), NotificationTypeEnum.WHATSAPP.name());
 
-        System.out.println(notificationList);
-
         if (!notificationList.isEmpty()) {
             try {
                 notificationList.forEach(notification -> {
                     Message message = twilioIntegration.sendWhatsApp(notification);
-
-                    System.out.println(message);
 
                     if (message != null) {
                         notification.setMessageSid(message.getSid());
@@ -47,8 +43,6 @@ public class SchedulerNotificationWhatsApp {
                         }
 
                         Notification response = notificationRepository.update(notification.getId(), notification);
-
-                        System.out.println(response.getMessageSid());
                     }
                 });
             } catch (Exception ex) {

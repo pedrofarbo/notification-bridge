@@ -10,7 +10,12 @@ import br.com.pedrofarbo.repository.NotificationRepository;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import java.time.LocalDateTime;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @ApplicationScoped
 @Transactional
@@ -18,6 +23,9 @@ public class NotificationService {
 
     @Inject
     NotificationRepository notificationRepository;
+
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private Client client;
 
     public SendNotificationResponse sendNotification(SendNotificationRequest sendNotificationRequest) throws Exception {
         SendNotificationResponse sendNotificationResponse = new SendNotificationResponse();
@@ -74,7 +82,31 @@ public class NotificationService {
             }
 
             Notification response = notificationRepository.update(notification.getId(), notification);
-            System.out.println(response.toString());
+
+            if(response.getHookUrl() != null) {
+                this.notifyClientHookUrl(response);
+            }
+
+            if(response.getHookEmail() != null) {
+                this.notifyClientEmail();
+            }
         }
+    }
+
+    public void notifyClientHookUrl(Notification notification) {
+        try {
+            client = ClientBuilder.newBuilder()
+                    .executorService(executorService)
+                    .build();
+
+            client.target(notification.getHookUrl()).request().post(Entity.entity(notification, "application/json"));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public void notifyClientEmail() {
+        //TODO
     }
 }
