@@ -1,7 +1,6 @@
 package br.com.pedrofarbo.controllers;
 
 import br.com.pedrofarbo.controllers.request.CallbackRequest;
-import br.com.pedrofarbo.controllers.response.CallbackResponse;
 import br.com.pedrofarbo.services.NotificationService;
 
 import javax.inject.Inject;
@@ -18,10 +17,16 @@ public class NotificationBridgeCallbackController {
     @POST
     @Produces(MediaType.TEXT_XML)
     @Transactional
-    public String callback(CallbackRequest callbackRequest) throws Exception {
+    public String callback(String MessageStatus, String MessageSid) throws Exception {
         try {
-            System.out.println(callbackRequest.toString());
+            CallbackRequest callbackRequest = new CallbackRequest();
+            callbackRequest.setMessageStatus(MessageStatus);
+            callbackRequest.setMessageSid(MessageSid);
+
+            System.out.println(callbackRequest);
+
             notificationService.notificationCallback(callbackRequest);
+
             return "<Response/>";
         } catch (Exception e) {
             throw new Exception("Erro ao receber o callback de atualização do provider", e);

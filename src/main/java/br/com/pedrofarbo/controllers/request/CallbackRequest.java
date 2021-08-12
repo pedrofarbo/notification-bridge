@@ -17,6 +17,14 @@ public class CallbackRequest implements Serializable {
         return MessageStatus;
     }
 
+    public void setMessageSid(String messageSid) {
+        MessageSid = messageSid;
+    }
+
+    public void setMessageStatus(String messageStatus) {
+        MessageStatus = messageStatus;
+    }
+
     @Override
     public String toString() {
         return "CallbackRequest{" +
