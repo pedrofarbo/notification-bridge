@@ -1,46 +1,14 @@
 package br.com.pedrofarbo.controllers.request;
 
-import org.jboss.resteasy.annotations.providers.multipart.PartType;
-
-import javax.ws.rs.FormParam;
-import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CallbackRequest implements Serializable {
 
-    @FormParam("SmsSid")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String smsSid;
-
-    @FormParam("SmsStatus")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String smsStatus;
-
-    @FormParam("MessageSid")
-    @PartType(MediaType.TEXT_PLAIN)
     public String messageSid;
-
-    @FormParam("MessageStatus")
-    @PartType(MediaType.TEXT_PLAIN)
     public String messageStatus;
 
     public CallbackRequest() {
-    }
-
-    public String getSmsSid() {
-        return smsSid;
-    }
-
-    public void setSmsSid(String smsSid) {
-        this.smsSid = smsSid;
-    }
-
-    public String getSmsStatus() {
-        return smsStatus;
-    }
-
-    public void setSmsStatus(String smsStatus) {
-        this.smsStatus = smsStatus;
     }
 
     public String getMessageSid() {
@@ -60,11 +28,22 @@ public class CallbackRequest implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CallbackRequest that = (CallbackRequest) o;
+        return Objects.equals(messageSid, that.messageSid) && Objects.equals(messageStatus, that.messageStatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(messageSid, messageStatus);
+    }
+
+    @Override
     public String toString() {
         return "CallbackRequest{" +
-                "smsSid='" + smsSid + '\'' +
-                ", smsStatus='" + smsStatus + '\'' +
-                ", messageSid='" + messageSid + '\'' +
+                "messageSid='" + messageSid + '\'' +
                 ", messageStatus='" + messageStatus + '\'' +
                 '}';
     }

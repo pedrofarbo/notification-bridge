@@ -2,7 +2,6 @@ package br.com.pedrofarbo.services;
 
 import br.com.pedrofarbo.controllers.request.CallbackRequest;
 import br.com.pedrofarbo.controllers.request.SendNotificationRequest;
-import br.com.pedrofarbo.controllers.response.CallbackResponse;
 import br.com.pedrofarbo.controllers.response.SendNotificationResponse;
 import br.com.pedrofarbo.models.Notification;
 import br.com.pedrofarbo.models.NotificationStatusEnum;
@@ -46,10 +45,12 @@ public class NotificationService {
         return sendNotificationResponse;
     }
 
-    public CallbackResponse notificationCallback(CallbackRequest callbackRequest) {
+    public void notificationCallback(CallbackRequest callbackRequest) {
         Notification notification = notificationRepository.findByMessageSid(callbackRequest.getMessageSid());
 
         if(notification != null) {
+            System.out.println(notification);
+
             switch (callbackRequest.getMessageStatus()) {
                 case "SENDING":
                     notification.setSendingDate(LocalDateTime.now());
@@ -74,16 +75,8 @@ public class NotificationService {
                     //Do Nothing
             }
 
-            notificationRepository.update(notification.getId(), notification);
-
-            CallbackResponse callbackResponse = new CallbackResponse();
-            callbackResponse.setId(notification.getId());
-            callbackResponse.setMessageSid(notification.getMessageSid());
-            callbackResponse.setStatus(notification.getStatus());
-
-            return callbackResponse;
+            Notification response = notificationRepository.update(notification.getId(), notification);
+            System.out.println(response.getMessageSid());
         }
-
-        return null;
     }
 }
