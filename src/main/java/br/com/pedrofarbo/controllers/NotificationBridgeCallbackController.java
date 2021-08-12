@@ -17,7 +17,7 @@ public class NotificationBridgeCallbackController {
 
     @POST
     @Produces(MediaType.TEXT_XML)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Transactional
     public String callback(@MultipartForm CallbackRequest callbackRequest) throws Exception {
         try {
