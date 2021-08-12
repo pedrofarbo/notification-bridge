@@ -49,9 +49,7 @@ public class NotificationService {
         Notification notification = notificationRepository.findByMessageSid(callbackRequest.getMessageSid());
 
         if(notification != null) {
-            System.out.println(notification);
-
-            switch (callbackRequest.getMessageStatus()) {
+            switch (callbackRequest.getMessageStatus().toUpperCase()) {
                 case "SENDING":
                     notification.setSendingDate(LocalDateTime.now());
                     notification.setStatus(NotificationStatusEnum.SENDING.name());
@@ -76,7 +74,7 @@ public class NotificationService {
             }
 
             Notification response = notificationRepository.update(notification.getId(), notification);
-            System.out.println(response.getMessageSid());
+            System.out.println(response.toString());
         }
     }
 }

@@ -2,7 +2,6 @@ package br.com.pedrofarbo.controllers;
 
 import br.com.pedrofarbo.controllers.request.CallbackRequest;
 import br.com.pedrofarbo.services.NotificationService;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
