@@ -1,6 +1,7 @@
 package br.com.pedrofarbo.jobs;
 
 import br.com.pedrofarbo.integrations.TwilioIntegration;
+import br.com.pedrofarbo.integrations.TwillioConfig;
 import br.com.pedrofarbo.models.Notification;
 import br.com.pedrofarbo.models.NotificationStatusEnum;
 import br.com.pedrofarbo.models.NotificationTypeEnum;

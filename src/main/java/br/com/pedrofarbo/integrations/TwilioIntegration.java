@@ -14,6 +14,9 @@ public class TwilioIntegration {
     @Inject
     TwillioConfig twillioConfig;
 
+    @Inject
+    CallbackConfig callbackConfig;
+
     public TwilioIntegration() {
     }
 
@@ -24,7 +27,7 @@ public class TwilioIntegration {
                 new com.twilio.type.PhoneNumber("whatsapp:"+sendNotificationRequest.getTo()),
                 new com.twilio.type.PhoneNumber("whatsapp:"+sendNotificationRequest.getFrom()),
                 sendNotificationRequest.getMessage())
-                .setStatusCallback(URI.create("https://api.pedrofarbo.com.br/api/v1/notification-bridge-callback"))
+                .setStatusCallback(URI.create(callbackConfig.url()))
                 .create();
     }
 
@@ -35,7 +38,7 @@ public class TwilioIntegration {
                 new com.twilio.type.PhoneNumber(sendNotificationRequest.getTo()),
                 new com.twilio.type.PhoneNumber(sendNotificationRequest.getFrom()),
                 sendNotificationRequest.getMessage())
-                .setStatusCallback(URI.create("https://api.pedrofarbo.com.br/api/v1/notification-bridge-callback"))
+                .setStatusCallback(URI.create(callbackConfig.url()))
                 .create();
     }
 }
